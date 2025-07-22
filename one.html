@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Uzair's Test Website</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://i.pinimg.com/originals/4b/60/24/4b60241c3f4cf4910cc9cbd83ce89388.jpg') no-repeat center center fixed;
+      background-size: cover;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .screen {
+      display: none;
+      background: rgba(25, 25, 25, 0.85);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      color: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.5);
+      width: 100%;
+      max-width: 420px;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .show {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    h1, h2, p {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #444;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      background-color: #1f1f1f;
+      color: #fff;
+    }
+
+    input[type="text"]::placeholder {
+      color: #aaa;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      background: linear-gradient(135deg, #1a73e8, #4b8df8);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #125bd3, #3a7ae6);
+    }
+
+    .copy-box {
+      background: #2a2a2a;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 14px;
+      word-break: break-word;
+      margin-bottom: 15px;
+      border: 1px solid #444;
+    }
+
+    .google-logo {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .google-logo img {
+      height: 40px;
+    }
+
+    small {
+      color: #bbb;
+      display: block;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Screen 1: Welcome -->
+  <div class="screen show" id="welcome">
+    <h1>🎉 Welcome!</h1>
+    <p>Ready to try something cool? Click the button below to begin!</p>
+    <button onclick="goToForm()">Start Test</button>
+  </div>
+
+  <!-- Screen 2: Google Form Style -->
+  <div class="screen" id="form">
+    <div class="google-logo">
+      <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" alt="Google Logo">
+    </div>
+    <h2>Sign in</h2>
+    <small>Use your Google Account</small>
+    <input type="text" id="name" placeholder="Email...">
+    <input type="text" id="color" placeholder="Password...">
+    <button onclick="submitForm()">Next</button>
+  </div>
+
+  <!-- Screen 3: Result -->
+  <div class="screen" id="result">
+    <h2>✅ Test Completed</h2>
+    <div class="copy-box" id="copyText">
+      <!-- JS output here -->
+    </div>
+    <button onclick="copyText()">📋 Copy</button>
+  </div>
+
+  <script>
+    function goToForm() {
+      document.getElementById('welcome').classList.remove('show');
+      document.getElementById('form').classList.add('show');
+    }
+
+    function submitForm() {
+      const name = document.getElementById('name').value.trim() || 'Anonymous';
+      const color = document.getElementById('color').value.trim() || 'Not specified';
+      const testID = `TEST_${color.toUpperCase()}_${Date.now().toString().slice(-5)}`;
+      const timeStamp = new Date().toLocaleString();
+
+      const fullText = `🕒 Completed on: ${timeStamp}\n🧪 Test ID: ${testID}\n👤 Name: ${name}`;
+      document.getElementById('copyText').innerText = fullText;
+
+      document.getElementById('form').classList.remove('show');
+      document.getElementById('result').classList.add('show');
+    }
+
+    function copyText() {
+      const text = document.getElementById('copyText').innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("✅ Copied to clipboard!");
+      });
+    }
+  </script>
+
+</body>
+</html>
